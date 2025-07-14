@@ -43,17 +43,13 @@ def cadastrar_cliente():
         telefone = request.form.get('telefone', '').strip()
         email = request.form.get('email', '').strip().lower()
 
-        # Verifica se já existe cliente com mesmo CPF, telefone ou email
         cliente_existente = Cliente.query.filter(
-            (Cliente.cpf == cpf) | 
-            (Cliente.telefone == telefone) | 
-            (Cliente.email == email)
+            (Cliente.cpf == cpf) | (Cliente.telefone == telefone) | (Cliente.email == email)
         ).first()
 
         if cliente_existente:
             erro = 'CPF, telefone ou email já cadastrados!'
         else:
-            # Cria o novo cliente
             novo_cliente = Cliente(
                 nome=nome,
                 cpf=cpf,
@@ -64,25 +60,58 @@ def cadastrar_cliente():
             db.session.commit()
             mensagem = 'Cliente cadastrado com sucesso!'
 
-    return render_template(
-        'admin/cadastro_clientes.html',
-        mensagem=mensagem,
-        erro=erro
-    )
+    clientes = Cliente.query.all()
+    return render_template('admin/cadastro_clientes.html', mensagem=mensagem, erro=erro, clientes=clientes)
 
 
 
 @app.route('/cadastrar_barbeiro', methods=['GET', 'POST'])
 def cadastrar_barbeiro():
+    mensagem = None
+    erro = None
+
     if request.method == 'POST':
         nome = request.form.get('nome', '').strip()
+        cpf = request.form.get('cpf', '').strip()
+        telefone = request.form.get('telefone', '').strip()
         especialidade = request.form.get('especialidade', '').strip()
-        novo_barbeiro = Barbeiro(nome=nome, especialidade=especialidade)
-        db.session.add(novo_barbeiro)
-        db.session.commit()
-        return redirect(url_for('admin_painel'))
-    return render_template('admin/cadastro_barbeiros.html')
+
+        barbeiro_existente = Barbeiro.query.filter(
+            (Barbeiro.cpf == cpf) | (Barbeiro.telefone == telefone)
+        ).first()
+
+        if barbeiro_existente:
+            erro = 'CPF ou telefone já cadastrados!'
+        else:
+            novo_barbeiro = Barbeiro(
+                nome=nome,
+                cpf=cpf,
+                telefone=telefone,
+                especialidade=especialidade
+            )
+            db.session.add(novo_barbeiro)
+            db.session.commit()
+            mensagem = 'Barbeiro cadastrado com sucesso!'
+
+    barbeiros = Barbeiro.query.all()
+    return render_template('admin/cadastro_barbeiros.html', mensagem=mensagem, erro=erro, barbeiros=barbeiros)
+
 #------------------------END_CADASTRO----------------------------
+
+@app.route('/remover_cliente/<int:id>', methods=['POST'])
+def remover_cliente(id):
+    cliente = Cliente.query.get_or_404(id)
+    db.session.delete(cliente)
+    db.session.commit()
+    return redirect(url_for('cadastrar_cliente'))
+
+
+@app.route('/remover_barbeiro/<int:id>', methods=['POST'])
+def remover_barbeiro(id):
+    barbeiro = Barbeiro.query.get_or_404(id)
+    db.session.delete(barbeiro)
+    db.session.commit()
+    return redirect(url_for('cadastrar_barbeiro'))
 
 
 

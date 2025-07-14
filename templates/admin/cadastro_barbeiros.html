@@ -6,10 +6,35 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>CADASTRO BARBEIROS</h1>
-     <form action="{{ url_for('cadastrar_barbeiro') }}" method="post">
+ <h1>Cadastro de Barbeiros</h1>
+
+{% if mensagem %}
+  <div style="color: green;">{{ mensagem }}</div>
+{% endif %}
+{% if erro %}
+  <div style="color: red;">{{ erro }}</div>
+{% endif %}
+
+<form action="{{ url_for('cadastrar_barbeiro') }}" method="post">
+  <input type="text" name="nome" placeholder="Nome" required>
   <input type="text" name="cpf" placeholder="CPF" required>
-  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="telefone" placeholder="Telefone" required>
+  <input type="text" name="especialidade" placeholder="Especialidade">
   <input type="submit" value="Cadastrar">
+</form>
+
+<h2>Barbeiros cadastrados</h2>
+<ul>
+  {% for barbeiro in barbeiros %}
+    <li>
+      {{ barbeiro.nome }} - {{ barbeiro.cpf }}
+      <form action="{{ url_for('remover_barbeiro', id=barbeiro.id) }}" method="post" style="display:inline;">
+        <button type="submit">Remover</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+
+
 </body>
 </html>
