@@ -1,0 +1,72 @@
+body {
+    background-image: url('/static/imagens/fundo.png');
+    
+    color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* coloca navbar em cima e o conteúdo abaixo */
+    align-items: center;
+    height: 100vh;
+
+.tabela{
+
+    background-color: rgb(70, 4, 4);
+    display: flex;            /* adiciona flex para o conteúdo interno se precisar */
+    flex-direction: column;
+    margin: 80px;
+    padding-right: 120px;
+       width: 80px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-style: double;
+    border-radius: 50px;
+    margin-bottom: 50px;
+    
+}
+
+img{
+    border-color: azure;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+}
+
+.logo-container {
+    margin-top: 50px;
+    background-color: white; /* faz o fundo ficar branco */
+    padding: 10px;           /* opcional, espaço ao redor do logo */
+    border-radius: 200px;      /* opcional, cantos arredondados */
+    display: inline-block;   /* garante que o container se ajuste ao tamanho da imagem */
+}
+
+
+.navbar {
+    padding-bottom: 50px;
+    width: 100%;
+    background-color: #333; /* cor escura para navbar */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* centraliza os links */
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    padding: 25px;
+    background-color: #575757;
+}
+
+.p_sobre{
+    font-weight: 50px;
+    font-size: 30px;
+    font-style: oblique;
+    text-shadow: #333;
+    box-shadow: #333;
+}

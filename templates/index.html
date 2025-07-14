@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Barbearia Json</title>
+      <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='/style.css')}}">
+</head>
+<body>
+    
+       <div class="navbar">
+  <a href="/">Home</a>
+  <a href="/sobre">Sobre</a>
+  <a href="/contatos">Contatos</a>
+  
+</div>
+<div class="logo-container">
+    <img src="/static/imagens/barbeariajson.png" alt="logo">
+    </div>
+    <div class="tabela">
+    <form action="{{ url_for('cliente') }}" method="post">
+        
+        <label for="cpf"nome='cpf'>
+           CPF <input type="text"name='cpf' id="cpf" placeholder="digite seu cpf">
+        </label><br><br>
+
+        <label for="email" nome="email">
+            Email:<input type="email" name="email" id="email" placeholder="digite seu email">
+        </label>
+        <input type="submit" value="Entrar">
+        
+    </form>
+    </div>
+</body>
+</html>
